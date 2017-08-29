@@ -1,6 +1,6 @@
 # FastCGI::NativeCall::Async
 
-An asynchronous wrapper for [FastCGI::NativeCall](https://github.com/jonathanstowe/FastCGI-NativeCall/)
+An asynchronous wrapper for [FastCGI::NativeCall](https://github.com/jonathanstowe/p6-fcgi)
 
 ## Synopsis
 
@@ -23,7 +23,7 @@ react {
 ## Description
 
 The rationale behind this module is to help
-[FastCGI::NativeCall](https://github.com/jonathanstowe/FastCGI-NativeCall/)
+[FastCGI::NativeCall](https://github.com/jonathanstowe/p6-fcgi)
 play nicely in a larger program by managing the blocking accept loop as
 a Supply that can for instance be used in a ```react``` block as above.
 It doesn't actually allow more than one FastCGI request to be processed at
