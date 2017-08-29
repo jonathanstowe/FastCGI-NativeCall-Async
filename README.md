@@ -33,6 +33,9 @@ does allow more than one FastCGI handler to be present in the same Perl
 
 ## Installation
 
+You will need a working HTTP server that can handle FastCGI to be able to
+use this properly.
+
 Assuming you have a working Rakudo Perl installation you should be able to
 install this with *zef* :
 
@@ -44,9 +47,14 @@ install this with *zef* :
 
 ## Support
 
-Please send any suggestions/patches etc to https://github.com/jonathanstowe/FastCGI-Native-Async/issues
+This module itself is fairly simple, but does depend on both other modules and the configuration of
+of your HTTP Server.
 
-## Licence && Copyright
+Please send any suggestions/patches etc to https://github.com/jonathanstowe/FastCGI-NativeCall-Async/issues
+
+I'd be interested in working configurations for various HTTP servers.
+
+## Licence & Copyright
 
 This is free software see the [LICENCE](LICENCE) file in the distribution.
 
