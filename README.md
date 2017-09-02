@@ -2,6 +2,8 @@
 
 An asynchronous wrapper for [FastCGI::NativeCall](https://github.com/jonathanstowe/p6-fcgi)
 
+[![Build Status](https://travis-ci.org/jonathanstowe/FastCGI-NativeCall-Async.svg?branch=master)](https://travis-ci.org/jonathanstowe/FastCGI-NativeCall-Async)
+
 ## Synopsis
 
 ```perl6
