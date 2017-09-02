@@ -64,7 +64,32 @@ This returns a L<Supply> on to which the L<FastCGI::NativeCall> object
 is emitted for each incoming request. This acts as a coercion on the
 FastCGI::NativeCall::Async object so may not need to be typed explicitly
 in some places (such as in a C<whenever> of a C<react> block as in the
-Synopsis.)
+Synopsis.) 
+
+This method, when first called, creates a thread that runs the normal
+C<Accept> loop of FastCGI::NativeCall in the background, any subsequent
+calls will return the same supply fed with the same data.  To end the
+loop use C<done> described below.
+
+=head2 method promise
+
+    method promise(FastCGI::NativeCall::Async:D: --> Promise)
+
+This is the promise that is provided by starting the underlying thread,
+it will not be defined until C<Supply> has been called.  It will be
+kept when the thread completes after C<done> is called.
+
+=head2 method done
+
+    method done(FastCGI::NativeCall::Async:D:)
+
+This terminates the loop started when C<Supply> is first called,
+afterward the Supply will no longer be fed with new requests.
+When the thread has completely finished the Promise returned
+by C<promise> will be kept.
+
+After this has been called you will need to create a new object
+to commence responding to requests.
 
 =end pod
 
@@ -88,17 +113,29 @@ class FastCGI::NativeCall::Async {
 
     has Supply $!supply;
 
-    has $!promise;
+    has Promise $.promise;
+
+    has Promise $!continue-promise;
+
     method Supply( --> Supply) {
         if !$!supply.defined {
             $!supply = self.supplier.Supply;
             $!promise = start {
+                $!continue-promise = Promise.new;
                 while self.fcgi.accept {
+                    last if $!continue-promise;
                     self.supplier.emit(self.fcgi);
                 }
             }
         }
         $!supply;
+    }
+
+    method done() {
+        if $!continue-promise.defined {
+            $!continue-promise.keep: True;
+            self.fcgi.Finish();
+        }
     }
 }
 # vim: expandtab shiftwidth=4 ft=perl6
