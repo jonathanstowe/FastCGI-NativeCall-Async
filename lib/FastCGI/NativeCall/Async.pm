@@ -122,7 +122,7 @@ class FastCGI::NativeCall::Async {
             $!supply = self.supplier.Supply;
             $!promise = start {
                 $!continue-promise = Promise.new;
-                while self.fcgi.accept {
+                while await Promise.anyof($!continue-promise, self!accept ) {
                     last if $!continue-promise;
                     self.supplier.emit(self.fcgi);
                 }
@@ -131,10 +131,18 @@ class FastCGI::NativeCall::Async {
         $!supply;
     }
 
+    method !accept( --> Promise ) {
+
+        start {
+            self.fcgi.accept;
+        }
+    }
+
     method done() {
         if $!continue-promise.defined {
             $!continue-promise.keep: True;
             self.fcgi.Finish();
+            $!supplier.done;
         }
     }
 }
