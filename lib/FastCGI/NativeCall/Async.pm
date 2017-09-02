@@ -89,7 +89,8 @@ When the thread has completely finished the Promise returned
 by C<promise> will be kept.
 
 After this has been called you will need to create a new object
-to commence responding to requests.
+to commence responding to requests as the FastCGI object will
+have been closed.
 
 =end pod
 
@@ -141,7 +142,7 @@ class FastCGI::NativeCall::Async {
     method done() {
         if $!continue-promise.defined {
             $!continue-promise.keep: True;
-            self.fcgi.Finish();
+            self.fcgi.close;
             $!supplier.done;
         }
     }
