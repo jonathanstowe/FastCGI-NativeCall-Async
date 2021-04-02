@@ -1,4 +1,4 @@
-#!/usr/bin/env perls
+#!/usr/bin/env raku
 
 use v6;
 
@@ -8,4 +8,4 @@ plan 1;
 
 use-ok 'FastCGI::NativeCall::Async';
 
-# vim: ft=perl6
+# vim: ft=raku

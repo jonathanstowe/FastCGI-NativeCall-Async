@@ -1,6 +1,6 @@
 {
   "name": "FastCGI::NativeCall::Async",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "auth": "github:jonathanstowe",
   "api": "1.0",
   "description": "A reactive wrapper for FastCGI::NatveCalll",
@@ -11,6 +11,7 @@
     "email" : "jns+gh@gellyfish.co.uk"
   },
   "perl": "6.*",
+  "raku": "6.*",
   "resources": [],
   "build-depends": [],
   "depends": [
@@ -29,7 +30,7 @@
   "provides": {
       "FastCGI::NativeCall::Async" : "lib/FastCGI/NativeCall/Async.pm"
   },
-  "meta-version": "0",
+  "meta-version": "1",
   "authors": [
       "Jonathan Stowe <jns+gh@gellyfish.co.uk"
   ]
