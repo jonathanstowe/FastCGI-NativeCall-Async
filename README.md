@@ -2,6 +2,7 @@
 
 An asynchronous wrapper for [FastCGI::NativeCall](https://github.com/jonathanstowe/raku-fcgi-nativecall)
 
+![Build Status](https://github.com/jonathanstowe/FastCGI-NativeCall-Async/workflows/CI/badge.svg)
 
 ## Synopsis
 
