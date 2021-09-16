@@ -97,13 +97,19 @@ have been closed.
 class FastCGI::NativeCall::Async {
     use FastCGI::NativeCall;
 
-    has Str $.path    is required;
-    has Int $.backlog is default(16);
+    has Str  $.path;
+    has UInt $.socket is default(0);
+    has Int  $.backlog is default(16);
 
     has FastCGI::NativeCall $!fcgi;
 
-    method fcgi( --> FastCGI::NativeCall) {
-        $!fcgi //= FastCGI::NativeCall.new(:$!path, :$!backlog);
+    method fcgi(--> FastCGI::NativeCall) {
+        if $!path {
+            $!fcgi //= FastCGI::NativeCall.new(:$!path, :$!backlog);
+        }
+        else {
+            $!fcgi //= FastCGI::NativeCall.new(:$!socket);
+        }
     }
 
     has Supplier $!supplier;
@@ -118,12 +124,12 @@ class FastCGI::NativeCall::Async {
 
     has Promise $!continue-promise;
 
-    method Supply( --> Supply) {
+    method Supply(--> Supply) {
         if !$!supply.defined {
             $!supply = self.supplier.Supply;
             $!promise = start {
                 $!continue-promise = Promise.new;
-                while await Promise.anyof($!continue-promise, self!accept ) {
+                while await Promise.anyof($!continue-promise, self!accept) {
                     last if $!continue-promise;
                     self.supplier.emit(self.fcgi);
                 }
@@ -132,8 +138,7 @@ class FastCGI::NativeCall::Async {
         $!supply;
     }
 
-    method !accept( --> Promise ) {
-
+    method !accept(--> Promise) {
         start {
             self.fcgi.accept;
         }
