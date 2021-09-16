@@ -104,12 +104,14 @@ class FastCGI::NativeCall::Async {
     has FastCGI::NativeCall $!fcgi;
 
     method fcgi(--> FastCGI::NativeCall) {
-        if $!path {
-            $!fcgi //= FastCGI::NativeCall.new(:$!path, :$!backlog);
-        }
-        else {
-            $!fcgi //= FastCGI::NativeCall.new(:$!socket);
-        }
+        $!fcgi //= do {
+            if $!path {
+                FastCGI::NativeCall.new(:$!path, :$!backlog);
+            }
+            else {
+                FastCGI::NativeCall.new(:$!socket);
+            }
+        };
     }
 
     has Supplier $!supplier;
