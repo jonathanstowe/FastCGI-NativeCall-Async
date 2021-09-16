@@ -1,6 +1,6 @@
 {
   "name": "FastCGI::NativeCall::Async",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "auth": "github:jonathanstowe",
   "api": "1.0",
   "description": "A reactive wrapper for FastCGI::NatveCalll",
@@ -28,7 +28,7 @@
       "Test"
   ],
   "provides": {
-      "FastCGI::NativeCall::Async" : "lib/FastCGI/NativeCall/Async.pm"
+      "FastCGI::NativeCall::Async" : "lib/FastCGI/NativeCall/Async.rakumod"
   },
   "meta-version": "1",
   "authors": [
