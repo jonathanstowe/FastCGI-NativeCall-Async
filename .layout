@@ -44,7 +44,7 @@
               "name": "NativeCall",
               "children": [
                 {
-                  "name": "Async.pm",
+                  "name": "Async.rakumod",
                   "type": "file"
                 }
               ]
